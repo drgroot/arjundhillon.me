@@ -22,15 +22,23 @@ server {
 server {
    listen 80;
    server_name arjundhillon.me www.arjundhillon.me;
+      
+
+   root /var/www/arjundhillon_me/html/;
+   
    location / {
-      root /var/www/arjundhillon_me/html/;
+      # serve le html
+      try_files $uri $uri/ =404;
    }
+
    location ~ \.php$ {
       include snippets/fastcgi-php.conf;
       include fastcgi_params;
-      fastcgi_pass 127.0.0.1:9000;
-#      fastcgi_pass unix:/var/run/php/php5-fpm.sock;
+
+      # use le sock.
+      fastcgi_pass unix:/var/run/php/php5-fpm.sock;
    }
+
    location ~ /\.ht {
       deny all;
    }
